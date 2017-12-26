@@ -4,15 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="np.com.ravi.ghswag.MainActivity">
+    tools:context="np.com.ravi.ghswag.MainActivity"
+    android:id="@+id/main_layout">
 
-    <TextView
+    <EditText
+        android:id="@+id/edit_text_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:hint="@string/user_name_hint"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/btn_show_swag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/show_swag"
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_username"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="parent"/>
+
 </android.support.constraint.ConstraintLayout>
+
+
