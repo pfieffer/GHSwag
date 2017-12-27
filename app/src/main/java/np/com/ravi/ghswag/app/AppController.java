@@ -1,8 +1,10 @@
-package np.com.ravi.ghswag;
+package np.com.ravi.ghswag.app;
 
 import android.app.Application;
 import android.content.Context;
 import android.content.IntentFilter;
+
+import np.com.ravi.ghswag.NetworkStateChangeReceiver;
 
 import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
 
@@ -13,8 +15,6 @@ import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
 public class AppController extends Application {
 
     private static final String WIFI_STATE_CHANGE_ACTION = "android.net.wifi.WIFI_STATE_CHANGED";
-
-    public static final String BASE_URL = "https://api.github.com/users/";
 
     @Override
     public void onCreate() {

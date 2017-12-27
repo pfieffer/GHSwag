@@ -1,10 +1,11 @@
-package np.com.ravi.ghswag;
+package np.com.ravi.ghswag.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import np.com.ravi.ghswag.R;
 import np.com.ravi.ghswag.api.ApiClient;
 import np.com.ravi.ghswag.api.ApiInterface;
 import np.com.ravi.ghswag.model.GithubUser;
@@ -21,17 +22,11 @@ public class ProfileActivity extends AppCompatActivity {
 
         Intent intentFromMainActivity = getIntent();
         String ghUsername = intentFromMainActivity.getStringExtra("githubUsername");
-        //Log.d("Got ", "username "+ghUsername);
-        //String userAPIurl = AppController.BASE_URL;
-
-        //Log.d("BASE_URL: ", AppController.BASE_URL);
 
         getGHUserRetrofitObject(ghUsername);
-
     }
 
     private void getGHUserRetrofitObject(String username) {
-        //showProgressDialog();
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
 
@@ -44,8 +39,8 @@ public class ProfileActivity extends AppCompatActivity {
                 try {
                     int statusCode = response.code();
                     Log.d("StatusCode ", "for response: "+statusCode);
-                    Log.d("username ", response.body().getLogin());
-                    Log.d("AvatarUrl ", response.body().getBio());
+                    Log.d("username ", response.body().getLogin()); //working
+                    Log.d("AvatarUrl ", response.body().getBio());  //working
                 } catch (Exception e){
                     Log.d("onResponse", "There is an error");
                     Log.d("Error ", e.getLocalizedMessage());

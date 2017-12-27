@@ -1,12 +1,9 @@
-package np.com.ravi.ghswag;
+package np.com.ravi.ghswag.activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.LocalBroadcastManager;
@@ -16,6 +13,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import np.com.ravi.ghswag.NetworkStateChangeReceiver;
+import np.com.ravi.ghswag.R;
 
 import static np.com.ravi.ghswag.NetworkStateChangeReceiver.IS_NETWORK_AVAILABLE;
 
