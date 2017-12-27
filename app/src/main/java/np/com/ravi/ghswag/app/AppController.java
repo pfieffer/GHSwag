@@ -14,6 +14,8 @@ public class AppController extends Application {
 
     private static final String WIFI_STATE_CHANGE_ACTION = "android.net.wifi.WIFI_STATE_CHANGED";
 
+    public static final String BASE_URL = "https://api.github.com/users/";
+
     @Override
     public void onCreate() {
         super.onCreate();
