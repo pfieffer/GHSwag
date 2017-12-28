@@ -4,11 +4,83 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="@dimen/main_padding"
     tools:context="np.com.ravi.ghswag.activity.ProfileActivity">
 
     <TextView
+        android:id="@+id/user_not_found_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hey YOu are in profile activity"/>
+        android:text="@string/user_not_found"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="parent" />
+
+    <ImageView
+        android:id="@+id/gh_user_display_pic"
+        android:layout_width="400px"
+        android:layout_height="400px"
+        android:src="@mipmap/ic_launcher_round"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="parent" />
+
+
+    <LinearLayout
+        android:id="@+id/user_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_left_profile_info"
+        android:layout_marginStart="@dimen/margin_left_profile_info"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toRightOf="@+id/gh_user_display_pic">
+
+        <TextView
+            android:id="@+id/gh_user_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="pfieffer"
+            android:textColor="@color/textPrimary"
+            android:textSize="@dimen/text_size_large"
+            app:layout_constraintTop_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/gh_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ravi Garbuja Pun"
+            android:textColor="@color/textSecondary"
+            android:textSize="@dimen/text_size_medium"
+            app:layout_constraintTop_toBottomOf="@id/gh_user_username" />
+
+        <TextView
+            android:id="@+id/gh_user_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="nepal"
+            android:textColor="@color/textSecondary"
+            android:textSize="@dimen/text_size_medium"
+            app:layout_constraintTop_toBottomOf="@id/gh_user_name" />
+
+        <TextView
+            android:id="@+id/gh_user_joined_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Joined Github 2 years ago"
+            android:textColor="@color/textSecondary"
+            android:textSize="@dimen/text_size_medium"
+            app:layout_constraintTop_toBottomOf="@id/gh_user_location" />
+
+        <TextView
+            android:id="@+id/gh_user_bio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/well_color"
+            android:text="Some BIO HERE"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/gh_user_joined_date" />
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
