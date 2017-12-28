@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("In ", "onReceive()");
                 boolean isNetworkAvailable = intent.getBooleanExtra(IS_NETWORK_AVAILABLE, false);
 
-                if (!isNetworkAvailable){
+                if (!isNetworkAvailable) {
                     Snackbar.make(mainLayout, "Please connect to a network", Snackbar.LENGTH_INDEFINITE).show();
                 } else {
                     Snackbar customSnackbar = Snackbar.make(mainLayout, "Connected", Snackbar.LENGTH_SHORT); //TODO: green color snackbar
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         buttonShowSwag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (validate()){
+                if (validate()) {
                     Intent intentToProfileActivity = new Intent(MainActivity.this, ProfileActivity.class);
                     intentToProfileActivity.putExtra("githubUsername", inputUsername.getText().toString());
                     startActivity(intentToProfileActivity);
@@ -70,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public boolean validate(){
-        if (inputUsername.getText().toString().length() == 0){
+    public boolean validate() {
+        if (inputUsername.getText().toString().length() == 0) {
             return false;
         } else {
             return true;
