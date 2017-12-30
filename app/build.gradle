@@ -35,4 +35,6 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     //Picasso
     compile 'com.squareup.picasso:picasso:2.5.2'
+    //MPAndroidChart Library
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 }
