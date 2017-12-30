@@ -5,7 +5,6 @@ import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -48,46 +47,44 @@ public class ProfileActivity extends AppCompatActivity {
                 try {
                     int statusCode = response.code();
                     Log.d("StatusCode ", "for response: " + statusCode);
-                    if (statusCode == 404) {
-                        //user not found
-                        Log.d("User ", "Not Found");
-                        findViewById(R.id.user_not_found_tv).setVisibility(View.VISIBLE);
-                    } else if (statusCode == 200) {
-                        //User exists
-                        Log.d("username ", response.body().getLogin()); //working
-                        //Log.d("Bio ", response.body().getBio());  //working, will not work if bio is not set
-                        Log.d("AvatarUrl ", response.body().getAvatarUrl().toString());
+                    Log.d("username ", response.body().getLogin()); //working
+                    //Log.d("Bio ", response.body().getBio());  //working, will not work if bio is not set
+                    Log.d("AvatarUrl ", response.body().getAvatarUrl().toString());
 
-                        ImageView profilePic = findViewById(R.id.gh_user_display_pic);
-                        Picasso.with(ProfileActivity.this).load(response.body().getAvatarUrl().toString())
-                                .resize(400, 400)
-                                .centerCrop().
-                                into(profilePic); //MIGHT BE NULL TOO??
+                    ImageView profilePic = findViewById(R.id.gh_user_display_pic);
+                    Picasso.with(ProfileActivity.this).load(response.body().getAvatarUrl().toString())
+                            .resize(400, 400)
+                            .centerCrop().
+                            into(profilePic); //MIGHT BE NULL TOO??
 
-                        TextView userName = findViewById(R.id.gh_user_username);
-                        userName.setText(response.body().getLogin());
+                    TextView userName = findViewById(R.id.gh_user_username);
+                    userName.setText(response.body().getLogin());
 
-                        TextView name = findViewById(R.id.gh_user_name);
-                        name.setText(response.body().getName()); //MIGHT BE NULL TOO??
+                    TextView name = findViewById(R.id.gh_user_name);
+                    name.setText(response.body().getName()); //MIGHT BE NULL TOO??
 
-                        TextView location = findViewById(R.id.gh_user_location);
-                        location.setText(response.body().getLocation()); //MIGHT BE NULL TOO??
+                    TextView location = findViewById(R.id.gh_user_location);
+                    location.setText(response.body().getLocation()); //MIGHT BE NULL TOO??
 
-                        Date joinedDate = response.body().getCreated_at();
-                        Date currentDate = Calendar.getInstance().getTime();
-                        int yearDiff = currentDate.getYear() - joinedDate.getYear();
-                        int monthDiff = currentDate.getMonth() - joinedDate.getMonth();
-                        Log.d("Joined ", yearDiff + " years, " + monthDiff + " months ago");
-                        TextView joinDate = findViewById(R.id.gh_user_joined_date);
-                        Resources res = getResources();
-                        String joinedBeforeText = String.format(res.getString(R.string.joined_interval), yearDiff, monthDiff);
-                        joinDate.setText(joinedBeforeText);
+                    Date joinedDate = response.body().getCreated_at();
+                    Date currentDate = Calendar.getInstance().getTime();
+                    int yearDiff = currentDate.getYear() - joinedDate.getYear();
+                    int monthDiff = currentDate.getMonth() - joinedDate.getMonth();
+                    Log.d("Joined ", yearDiff + " years, " + monthDiff + " months ago");
+                    TextView joinDate = findViewById(R.id.gh_user_joined_date);
+                    Resources res = getResources();
+                    String joinedBeforeText = String.format(res.getString(R.string.joined_interval), yearDiff, monthDiff);
+                    joinDate.setText(joinedBeforeText);
 
-                        if (response.body().getBio() != null) {
-                            TextView bio = findViewById(R.id.gh_user_bio);
-                            bio.setText(response.body().getBio());
-                        }
+                    TextView numberOfFollowers = (TextView) findViewById(R.id.gh_user_no_of_followers);
+                    numberOfFollowers.setText(String.format(res.getString(R.string.followers), response.body().getFollowers()));
 
+                    TextView numberOfFollowing = (TextView) findViewById(R.id.gh_user_no_of_following);
+                    numberOfFollowing.setText(String.format(res.getString(R.string.following), response.body().getFollowing()));
+
+                    if (response.body().getBio() != null) {
+                        TextView bio = findViewById(R.id.gh_user_bio);
+                        bio.setText(response.body().getBio());
                     }
                 } catch (Exception e) {
                     Log.d("onResponse", "There is an error");

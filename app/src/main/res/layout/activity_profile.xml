@@ -7,17 +7,6 @@
     android:padding="@dimen/main_padding"
     tools:context="np.com.ravi.ghswag.activity.ProfileActivity">
 
-    <TextView
-        android:id="@+id/user_not_found_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/user_not_found"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="parent"
-        app:layout_constraintRight_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="parent" />
-
     <ImageView
         android:id="@+id/gh_user_display_pic"
         android:layout_width="400px"
@@ -73,13 +62,31 @@
             app:layout_constraintTop_toBottomOf="@id/gh_user_location" />
 
         <TextView
+            android:id="@+id/gh_user_no_of_followers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/followers"
+            android:textColor="@color/textSecondary"
+            android:textSize="@dimen/text_size_medium"
+            app:layout_constraintTop_toBottomOf="@id/gh_user_joined_date" />
+
+        <TextView
+            android:id="@+id/gh_user_no_of_following"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/following"
+            android:textColor="@color/textSecondary"
+            android:textSize="@dimen/text_size_medium"
+            app:layout_constraintTop_toBottomOf="@id/gh_user_no_of_followers" />
+
+        <TextView
             android:id="@+id/gh_user_bio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/well_color"
             android:text="Some BIO HERE"
             android:textColor="@color/white"
-            app:layout_constraintTop_toBottomOf="@id/gh_user_joined_date" />
+            app:layout_constraintTop_toBottomOf="@id/gh_user_no_of_following" />
 
     </LinearLayout>
 

@@ -7,4 +7,7 @@
     <string name="user_not_found">Github user not found. Please check the username.</string>
 
     <string name="joined_interval">Joined %1d years, %1d months ago.</string>
+    <string name="followers">Followers: %3d</string>
+    <string name="following">Following: %3d</string>
+
 </resources>

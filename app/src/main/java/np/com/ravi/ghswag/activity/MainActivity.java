@@ -16,10 +16,18 @@ import android.widget.EditText;
 
 import np.com.ravi.ghswag.NetworkStateChangeReceiver;
 import np.com.ravi.ghswag.R;
+import np.com.ravi.ghswag.api.ApiClient;
+import np.com.ravi.ghswag.api.ApiInterface;
+import np.com.ravi.ghswag.model.GithubUser;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static np.com.ravi.ghswag.NetworkStateChangeReceiver.IS_NETWORK_AVAILABLE;
 
 public class MainActivity extends AppCompatActivity {
+
+    String TAG = "MainActivity";
 
     ConstraintLayout mainLayout;
     EditText inputUsername;
@@ -34,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         inputUsername = (EditText) findViewById(R.id.edit_text_username);
         buttonShowSwag = (Button) findViewById(R.id.btn_show_swag);
 
+        //Showing Youtube like snackBar for network state change
         IntentFilter intentFilter = new IntentFilter(NetworkStateChangeReceiver.NETWORK_AVAILABLE_ACTION);
         LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
             @Override
@@ -60,9 +69,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (validate()) {
-                    Intent intentToProfileActivity = new Intent(MainActivity.this, ProfileActivity.class);
-                    intentToProfileActivity.putExtra("githubUsername", inputUsername.getText().toString());
-                    startActivity(intentToProfileActivity);
+
+                    isValidGHUser(inputUsername.getText().toString());
+
                 } else {
                     Snackbar.make(mainLayout, "The username field is empty", Snackbar.LENGTH_SHORT).show();
                 }
@@ -76,6 +85,52 @@ public class MainActivity extends AppCompatActivity {
         } else {
             return true;
         }
+    }
+
+    public void isValidGHUser(String userName) {
+        Log.d(TAG, "Inside isValidGHUser() function");
+
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+
+
+        Call<GithubUser> call = apiService.getGithubUserDetails(userName);
+
+        call.enqueue(new Callback<GithubUser>() {
+            @Override
+            public void onResponse(Call<GithubUser> call, Response<GithubUser> response) {
+                try {
+                    int statusCode = response.code();
+                    Log.d("StatusCode ", "for response: " + statusCode);
+                    if (statusCode == 404) {
+                        //user not found
+                        Log.d("User ", "Not Found");
+                        //isValid = false;
+                        Log.d(TAG, "not a valid GH USer");
+                        Snackbar.make(mainLayout, "The username is not a valid Github Username", Snackbar.LENGTH_SHORT).show();
+                    } else if (statusCode == 200) {
+                        //User exists
+                        //isValid = true;
+                        Log.d(TAG, "valid GH USer, going to next activity");
+                        Intent intentToProfileActivity = new Intent(MainActivity.this, ProfileActivity.class);
+                        intentToProfileActivity.putExtra("githubUsername", inputUsername.getText().toString());
+                        startActivity(intentToProfileActivity);
+                    }
+                } catch (Exception e) {
+                    Log.d("onResponse", "There is an error");
+                    Log.d("Error ", e.getLocalizedMessage());
+                    e.printStackTrace();
+                    Snackbar.make(mainLayout, "Error connecting to GH API, please try again.", Snackbar.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<GithubUser> call, Throwable t) {
+                Log.d("onFailure", t.toString());
+            }
+        });
+
     }
 
 }
