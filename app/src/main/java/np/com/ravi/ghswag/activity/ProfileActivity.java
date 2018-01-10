@@ -10,6 +10,10 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import org.joda.time.DateTime;
+import org.joda.time.Duration;
+import org.joda.time.Interval;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -55,21 +59,28 @@ public class ProfileActivity extends AppCompatActivity {
                     Picasso.with(ProfileActivity.this).load(response.body().getAvatarUrl().toString())
                             .resize(400, 400)
                             .centerCrop().
-                            into(profilePic); //MIGHT BE NULL TOO??
+                            into(profilePic); //MIGHT BE NULL TOO??, Nope
 
                     TextView userName = findViewById(R.id.gh_user_username);
                     userName.setText(response.body().getLogin());
 
                     TextView name = findViewById(R.id.gh_user_name);
-                    name.setText(response.body().getName()); //MIGHT BE NULL TOO??
+                    name.setText(response.body().getName()); //MIGHT BE NULL TOO??, Yes but is not crashing
 
                     TextView location = findViewById(R.id.gh_user_location);
-                    location.setText(response.body().getLocation()); //MIGHT BE NULL TOO??
+                    location.setText(response.body().getLocation()); //MIGHT BE NULL TOO??, Yes, but is not crashing
 
                     Date joinedDate = response.body().getCreated_at();
-                    Date currentDate = Calendar.getInstance().getTime();
-                    int yearDiff = currentDate.getYear() - joinedDate.getYear();
-                    int monthDiff = currentDate.getMonth() - joinedDate.getMonth();
+                    DateTime joinedDateTime = new DateTime(joinedDate);
+
+                    DateTime currentDateTime = new DateTime();
+
+                    Duration duration = new Duration(joinedDateTime, currentDateTime);
+                    Long differenceDays = duration.getStandardDays();
+                    int yearDiff = (int) (differenceDays/365);
+                    differenceDays %= 365;
+                    int monthDiff = (int) (differenceDays / 30);
+
                     Log.d("Joined ", yearDiff + " years, " + monthDiff + " months ago");
                     TextView joinDate = findViewById(R.id.gh_user_joined_date);
                     Resources res = getResources();
@@ -86,6 +97,7 @@ public class ProfileActivity extends AppCompatActivity {
                         TextView bio = findViewById(R.id.gh_user_bio);
                         bio.setText(response.body().getBio());
                     }
+                    
                 } catch (Exception e) {
                     Log.d("onResponse", "There is an error");
                     Log.d("Error ", e.getLocalizedMessage());
