@@ -4,15 +4,16 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import np.com.ravi.ghswag.NetworkStateChangeReceiver;
 import np.com.ravi.ghswag.R;
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     EditText inputUsername;
     Button buttonShowSwag;
 
+    ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         mainLayout = (ConstraintLayout) findViewById(R.id.main_layout);
         inputUsername = (EditText) findViewById(R.id.edit_text_username);
         buttonShowSwag = (Button) findViewById(R.id.btn_show_swag);
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
         //Showing Youtube like snackBar for network state change
         IntentFilter intentFilter = new IntentFilter(NetworkStateChangeReceiver.NETWORK_AVAILABLE_ACTION);
@@ -52,11 +56,14 @@ public class MainActivity extends AppCompatActivity {
 
                 if (!isNetworkAvailable) {
                     Snackbar.make(mainLayout, "Please connect to a network", Snackbar.LENGTH_INDEFINITE).show();
+                    buttonShowSwag.setEnabled(false);
                 } else {
                     Snackbar customSnackbar = Snackbar.make(mainLayout, "Connected", Snackbar.LENGTH_SHORT); //TODO: green color snackbar
                     View snackBarView = customSnackbar.getView();
                     snackBarView.setBackgroundColor(getResources().getColor(R.color.green));
                     customSnackbar.show();
+
+                    buttonShowSwag.setEnabled(true);
                     setOnClickListenerOnButton();
                 }
             }
@@ -69,9 +76,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (validate()) {
-
-                    isValidGHUser(inputUsername.getText().toString());
-
+                    isValidGHUser(inputUsername.getText().toString().trim());
                 } else {
                     Snackbar.make(mainLayout, "The username field is empty", Snackbar.LENGTH_SHORT).show();
                 }
@@ -80,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean validate() {
-        if (inputUsername.getText().toString().length() == 0) {
+        if (inputUsername.getText().toString().trim().length() == 0) {
             return false;
         } else {
             return true;
@@ -89,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void isValidGHUser(String userName) {
         Log.d(TAG, "Inside isValidGHUser() function");
+        progressBar.setVisibility(View.VISIBLE);
 
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
@@ -107,19 +113,22 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("User ", "Not Found");
                         //isValid = false;
                         Log.d(TAG, "not a valid GH USer");
+                        progressBar.setVisibility(View.INVISIBLE);
                         Snackbar.make(mainLayout, "The username is not a valid Github Username", Snackbar.LENGTH_SHORT).show();
                     } else if (statusCode == 200) {
                         //User exists
-                        //isValid = true;
+                        //isValid = true
                         Log.d(TAG, "valid GH USer, going to next activity");
+                        progressBar.setVisibility(View.INVISIBLE);
                         Intent intentToProfileActivity = new Intent(MainActivity.this, ProfileActivity.class);
-                        intentToProfileActivity.putExtra("githubUsername", inputUsername.getText().toString());
+                        intentToProfileActivity.putExtra("githubUsername", inputUsername.getText().toString().trim());
                         startActivity(intentToProfileActivity);
                     }
                 } catch (Exception e) {
                     Log.d("onResponse", "There is an error");
                     Log.d("Error ", e.getLocalizedMessage());
                     e.printStackTrace();
+                    progressBar.setVisibility(View.INVISIBLE);
                     Snackbar.make(mainLayout, "Error connecting to GH API, please try again.", Snackbar.LENGTH_SHORT).show();
                 }
 
@@ -128,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<GithubUser> call, Throwable t) {
                 Log.d("onFailure", t.toString());
+                progressBar.setVisibility(View.INVISIBLE);
             }
         });
 
