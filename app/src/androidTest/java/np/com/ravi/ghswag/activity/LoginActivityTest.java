@@ -17,9 +17,9 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 /**
  * Created by ravi on 1/18/18.
  */
-public class MainActivityTest {
+public class LoginActivityTest {
     @Rule
-    public ActivityTestRule<MainActivity> mainActivityActivityTestRule = new ActivityTestRule<MainActivity>(MainActivity.class);
+    public ActivityTestRule<LoginActivity> mainActivityActivityTestRule = new ActivityTestRule<LoginActivity>(LoginActivity.class);
 
     private  String userNameToBeTyped;
 

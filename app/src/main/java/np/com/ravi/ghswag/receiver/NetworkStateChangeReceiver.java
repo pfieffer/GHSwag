@@ -1,4 +1,4 @@
-package np.com.ravi.ghswag;
+package np.com.ravi.ghswag.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

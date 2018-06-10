@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.IntentFilter;
 
-import np.com.ravi.ghswag.NetworkStateChangeReceiver;
+import np.com.ravi.ghswag.receiver.NetworkStateChangeReceiver;
 
 import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
 

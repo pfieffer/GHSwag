@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/action_profile"
+        android:title="@string/menu_profile"
+        android:icon="@drawable/ic_profile_circle_black_24dp" />
+    <item android:id="@+id/action_stats"
+        android:title="@string/menu_stats"
+        android:icon="@drawable/ic_stats_black_24dp" />
+</menu>
