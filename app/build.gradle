@@ -30,13 +30,13 @@ dependencies {
     implementation 'com.android.support:design:26.1.0'
 
     //Retrofit
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     //Gson Converter
-    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     //Picasso
-    compile 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
     //MPAndroidChart Library
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     //Joda time
-    compile 'joda-time:joda-time:2.9.9'
+    implementation 'joda-time:joda-time:2.9.9'
 }
