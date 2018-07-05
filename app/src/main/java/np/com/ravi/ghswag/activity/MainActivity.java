@@ -6,6 +6,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -14,7 +15,9 @@ import np.com.ravi.ghswag.adapter.BottombarAdapter;
 import np.com.ravi.ghswag.fragments.ProfileFragment;
 import np.com.ravi.ghswag.fragments.StatsFragment;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener{
+
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     private BottomNavigationView bottomNavigationView;
     private ViewPager viewPager;
@@ -41,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottombarAdapter.addFragments(statsFragment); //1
 
         viewPager.setAdapter(bottombarAdapter);
-
+        viewPager.addOnPageChangeListener(this);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
     }
@@ -59,5 +62,27 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
         }
         return true;
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        switch (position){
+            case 0:
+                bottomNavigationView.setSelectedItemId(R.id.action_profile);
+                break;
+            case 1:
+                bottomNavigationView.setSelectedItemId(R.id.action_stats);
+                break;
+        }
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }

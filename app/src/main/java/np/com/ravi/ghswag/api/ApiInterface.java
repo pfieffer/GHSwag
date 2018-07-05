@@ -16,7 +16,7 @@ public interface ApiInterface {
     /**
      *
      * @param user
-     * @return GithubUSer object
+     * @return GithubUser object
      */
     @GET("/users/{user}")
     Call<GithubUser> getGithubUserDetails(@Path("user") String user);
@@ -24,7 +24,7 @@ public interface ApiInterface {
     /**
      *
      * @param user
-     * @return UserRepo object
+     * @return List of UserRepo object
      */
     @GET("/users/{user}/repos")
     Call<List<UserRepo>> getGithubUserRepos(@Path("user") String user);
